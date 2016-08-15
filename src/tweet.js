@@ -37,8 +37,8 @@ var Twitter = React.createClass({
     return (
       <div className="twitter">
         <h1>Tweets</h1>
-        {/* Render TweetForm component here */}
-        {/* Render TweetList component here */}
+        <TweetForm author="Author Name" text="Type your tweet here" />
+        <TweetList data={ this.props.data } />
       </div>
     );
   }
@@ -48,7 +48,9 @@ var TweetForm = React.createClass({
   render: function () {
     return (
       <form className="tweetForm">
-        {/* Render some text here */}
+        <input type="text" placeholder="Author Name" /> &nbsp;
+        <input type="text" placeholder="Type your tweet here" /> &nbsp;
+        <button type="submit" className="btn btn-info">Tweet</button>
       </form>
     );
   }
@@ -56,9 +58,12 @@ var TweetForm = React.createClass({
 
 var TweetList = React.createClass({
   render: function () {
+    var tweets = this.props.data.map(function(tweet){
+      return (<div><Tweet text={tweet.text} author={tweet.author} /></div>);
+    });
     return (
       <div className="tweetList">
-        {/* Render some text here */}
+        {tweets}
       </div>
     );
   }
@@ -68,13 +73,14 @@ var Tweet = React.createClass({
   render: function () {
     return (
       <div className="tweet">
-        {/* Render some text here */}
+        <h2>{this.props.text}</h2>
+        <h4><i> - {this.props.author}</i></h4>
       </div>
     );
   }
 });
 
 ReactDOM.render(
-  <Twitter />,
+  <Twitter data={data} />,
   document.getElementById('tweets')
 );

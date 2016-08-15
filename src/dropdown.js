@@ -10,6 +10,14 @@ var styles = {
 	}
 };
 
+var exercises = ['Building Components', 
+	'Passing Data to Components',
+	'Adding State to Components',
+	'Passing State From Parent to Child Components',
+	'Adding Inline Styles to React Components',
+	'A Short Exercise on Lifecycle Methods',
+];
+
 var DropdownMenu = React.createClass({
 	getInitialState: function() {
 		return { open: false };
@@ -19,19 +27,20 @@ var DropdownMenu = React.createClass({
 		this.setState({ open: !this.state.open });
 	},
 	render: function() {
+		var exerciseList = this.props.list.map(function(item){
+			return <li>{item}</li>
+		});
 		return (
 			<div className='dropdown-wrapper' onClick={ this.toggleMenu }>
-				<button className='btn btn-info'>
-					Dropdown Menu
+				<button className={ this.state.open ? 'btn btn-success' : 'btn btn-info' }>
+					{ this.props.title }
 				</button>
-				<ul>
-					<li>Option #1</li>
-					<li>Option #2</li>
-					<li>Option #3</li>
+				<ul style={ this.state.open ? styles.open : styles.closed }>
+					{exerciseList}
 				</ul>
 			</div>
 		);
 	}
 });
 
-ReactDOM.render(<DropdownMenu />, document.getElementById('dropdown-menu'))
+ReactDOM.render(<DropdownMenu title="Exercises" list={exercises}/>, document.getElementById('dropdown-menu'))
